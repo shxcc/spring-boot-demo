@@ -1,0 +1,18 @@
+spring:
+  datasource:
+        url: jdbc:mysql://127.0.0.1:3306/mytest?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+        username: root
+        password: 123
+        driver-class-name: com.mysql.jdbc.Driver
+        max-active: 20
+        min-idle: 8
+        max-idle: 8
+        initial-size: 10
+  data:
+    mongodb:
+         url: mongodb://root:admin123!@10.10.166:27017/test
+
+mybatis:
+  mapper-locations: classpath:mybatis/*.xml
+
+

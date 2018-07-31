@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >       
+<mapper namespace="com.spring.boot.dao.DemoMapper">
+  <resultMap id="BaseResultMap"
+      type="com.spring.boot.model.Demo">
+      <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+      <result column="age" property="age" jdbcType="INTEGER" />
+      <result column="hobby" property="hobby" jdbcType="VARCHAR" />
+      <result column="address" property="address" jdbcType="VARCHAR" />
+      <result column="phone" property="phone" jdbcType="VARCHAR" />
+      <result column="createTime" property="createTime" jdbcType="VARCHAR" />
+      <result column="editeTime" property="editeTime" jdbcType="VARCHAR" />
+  </resultMap>
+    
+  <sql id="Base_Column_List">
+    uuid, name, age, hobby, address, phone, createTime, editeTime
+  </sql>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from demo
+  </select>
+  
+  <select id="selectByUuid" resultMap="BaseResultMap" parameterType="com.example.springbootdemo.model.Demo" >
+    select 
+    <include refid="Base_Column_List" />
+    from demo
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="com.example.springbootdemo.model.Demo" >
+    select 
+    <include refid="Base_Column_List" />
+    from demo
+    where hobby = #{hobby,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="save" parameterType="com.example.springbootdemo.model.Demo">
+    insert into demo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="age != null" >
+        age,
+      </if> 
+      <if test="hobby != null" >
+        hobby, 
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="phone != null" > 
+        phone,
+      </if>
+      <if test="createTime != null" > 
+        createTime,
+      </if>
+      <if test="editeTime != null" > 
+        editeTime
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" > 
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" > 
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" > 
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="hobby != null" > 
+        #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" > 
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" > 
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" > 
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="editeTime != null" > 
+        #{editeTime,jdbcType=VARCHAR}
+      </if>
+    </trim> 
+  </insert> 
+  
+  <delete id="delete" parameterType="java.util.List"> 
+	delete from demo where uuid in
+	<foreach item="item" index="index" collection="list" open="(" separator="," close=")"> 
+      #{item} 
+    </foreach>
+  </delete>
+
+  <update id="update" parameterType="com.example.springbootdemo.model.Demo" >
+    update demo
+    <set>
+      <if test="name != null" > 
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" > 
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="hobby != null" > 
+        hobby = #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" > 
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" > 
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" > 
+        createTime = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="editeTime != null" > 
+        editeTime = #{editeTime,jdbcType=VARCHAR}
+      </if>
+    </set>
+    <where>
+       uuid = #{uuid,jdbcType=INTEGER}
+    </where>
+  </update>
+</mapper>
